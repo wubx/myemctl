@@ -1,9 +1,11 @@
 package mysql
+
 import (
-	"fmt"
 	"comm"
+	"fmt"
 )
-func InitStr( mdb *comm.DBconn){
+
+func InitStr(mdb *comm.DBconn) {
 	dbx := mdb.GetMySQLconn()
 	defer mdb.PutMySQL(dbx)
 
@@ -23,13 +25,13 @@ func InitStr( mdb *comm.DBconn){
 		cpu_total_pct SMALLINT UNSIGNED NOT NULL DEFAULT 0,
 		PRIMARY KEY (id),
 		INDEX idx_addtime_hostname (addtime , hostname))
-		`	
+		`
 	_, err := dbx.Query(cpu_str)
-	if  err != nil{
-		fmt.Println("Eorr:",err)
+	if err != nil {
+		fmt.Println("Eorr:", err)
 		return
 	}
-	load_str :=`
+	load_str := `
 	CREATE TABLE IF NOT EXISTS sys_load (
 		id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 		addtime INT UNSIGNED NOT NULL,
@@ -44,11 +46,11 @@ func InitStr( mdb *comm.DBconn){
 		`
 
 	_, err = dbx.Query(load_str)
-	if  err != nil{
-		fmt.Println("Eorr:",err)
+	if err != nil {
+		fmt.Println("Eorr:", err)
 		return
 	}
-	diskio_str :=`
+	diskio_str := `
 	CREATE TABLE IF NOT EXISTS sys_diskioinfo (
 		id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 		addtime INT NOT NULL,
@@ -66,13 +68,13 @@ func InitStr( mdb *comm.DBconn){
 		PRIMARY KEY (id),
 		INDEX idx_addtime_hostname (addtime, hostname))
 		`
-		_, err = dbx.Query(diskio_str)
-		if  err != nil{
-			fmt.Println("Eorr:",err)
-			return
-		}
-		
-		disksp_str :=`
+	_, err = dbx.Query(diskio_str)
+	if err != nil {
+		fmt.Println("Eorr:", err)
+		return
+	}
+
+	disksp_str := `
 		CREATE TABLE IF NOT EXISTS sys_diskspinfo (
 			id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 			addtime INT UNSIGNED NULL,
@@ -86,13 +88,13 @@ func InitStr( mdb *comm.DBconn){
 			PRIMARY KEY (id),
 			INDEX idx_addtime_hostname (addtime, hostname))
 			`
-		_, err = dbx.Query(disksp_str)
-		if  err != nil{
-			fmt.Println("Eorr:",err)
-			return
-		}
+	_, err = dbx.Query(disksp_str)
+	if err != nil {
+		fmt.Println("Eorr:", err)
+		return
+	}
 
-		mem_str := `
+	mem_str := `
 		CREATE TABLE IF NOT EXISTS sys_mem (
 			id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 			addtime INT UNSIGNED NULL,
@@ -102,13 +104,13 @@ func InitStr( mdb *comm.DBconn){
 			PRIMARY KEY (id),
 			INDEX idx_addtime_hostname (addtime, hostname))
 			`
-		_, err = dbx.Query(mem_str)
-		if  err != nil{
-			fmt.Println("Eorr:",err)
-			return
-		}
+	_, err = dbx.Query(mem_str)
+	if err != nil {
+		fmt.Println("Eorr:", err)
+		return
+	}
 
-		my_avtive_str :=`
+	my_avtive_str := `
 		CREATE TABLE IF NOT EXISTS my_active (
 			id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 			addtime INT NOT NULL,
@@ -125,13 +127,13 @@ func InitStr( mdb *comm.DBconn){
 			PRIMARY KEY (id),
 			INDEX idx_addtime_hostname_port (addtime, hostname, port))
 			`
-		_, err = dbx.Query(my_avtive_str)
-		if  err != nil{
-			fmt.Println("Eorr:",err)
-			return
-		}
+	_, err = dbx.Query(my_avtive_str)
+	if err != nil {
+		fmt.Println("Eorr:", err)
+		return
+	}
 
-		my_innodb_str := `
+	my_innodb_str := `
 		CREATE TABLE IF NOT EXISTS my_innodb_status (
 			id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 			addtime INT UNSIGNED NOT NULL,
@@ -155,14 +157,13 @@ func InitStr( mdb *comm.DBconn){
 			PRIMARY KEY (id),
 			INDEX idx_addtime_hostname_port (addtime, hostname, port))
 			`
-		_, err = dbx.Query(my_innodb_str)
-		if  err != nil{
-			fmt.Println("Eorr:",err)
-			return
-		}
+	_, err = dbx.Query(my_innodb_str)
+	if err != nil {
+		fmt.Println("Eorr:", err)
+		return
+	}
 
-
-		my_thread_str :=`
+	my_thread_str := `
 		CREATE TABLE IF NOT EXISTS my_thread (
 			id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 			addtime INT UNSIGNED NOT NULL,
@@ -177,11 +178,11 @@ func InitStr( mdb *comm.DBconn){
 			PRIMARY KEY (id),
 			INDEX idx_addtime_hostname_port (addtime, hostname, port))
 			`
-		_, err = dbx.Query(my_thread_str)
-		if  err != nil{
-			fmt.Println("Eorr:",err)
-			return
-		}
+	_, err = dbx.Query(my_thread_str)
+	if err != nil {
+		fmt.Println("Eorr:", err)
+		return
+	}
 
-		fmt.Println("Create OK")
+	fmt.Println("Create OK")
 }
